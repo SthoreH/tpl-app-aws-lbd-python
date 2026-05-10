@@ -1,0 +1,27 @@
+name: CI Dev
+
+on:
+  pull_request:
+    branches: [dev]
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  pr-validate:
+    name: Validate Pull Request
+    runs-on: ubuntu-latest
+    steps:
+      - uses: SthoreH/shd-github-actions-workflows/actions/validate-pr@v1.4.4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          validate-title: "false"
+          validate-description: "false"
+
+  ci:
+    name: Validate Lambda
+    uses: SthoreH/shd-github-actions-workflows/.github/workflows/ci-lambda-python.yml@v1.4.4
+    with:
+      environment: dev
+    secrets: inherit

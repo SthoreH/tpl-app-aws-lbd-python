@@ -1,0 +1,21 @@
+name: Deploy Dev
+
+on:
+  push:
+    branches: [dev]
+    paths:
+      - "terraform-aws/**"
+      - "app/**"
+      - ".github/**"
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  cd:
+    name: Deploy Lambda
+    uses: SthoreH/shd-github-actions-workflows/.github/workflows/cd-lambda-python.yml@v1.4.4
+    with:
+      environment: dev
+    secrets: inherit

@@ -1,0 +1,50 @@
+// TODO: Este arquivo NÃO é consumido pelo iam.tf — é apenas referência.
+// Para usar, copie um statement para application_policy.tftpl (JSON puro,
+// sem comentários // ou /* */) e ajuste a interpolação ${...}.
+// Declare também as variáveis usadas em locals.template_variables (locals.tf).
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "DynamoDBReadExample",
+      "Effect": "Allow",
+      "Action": [
+        "dynamodb:GetItem",
+        "dynamodb:Query"
+      ],
+      "Resource": [
+        "arn:aws:dynamodb:sa-east-1:${account_id}:table/${table_name}"
+      ]
+    },
+    {
+      "Sid": "SQSConsumerExample",
+      "Effect": "Allow",
+      "Action": [
+        "sqs:ReceiveMessage",
+        "sqs:DeleteMessage",
+        "sqs:GetQueueAttributes"
+      ],
+      "Resource": "arn:aws:sqs:sa-east-1:${account_id}:${queue_name}"
+    },
+    {
+      "Sid": "SecretsManagerReadExample",
+      "Effect": "Allow",
+      "Action": [
+        "secretsmanager:GetSecretValue"
+      ],
+      "Resource": "arn:aws:secretsmanager:sa-east-1:${account_id}:secret:${secret_name}-*"
+    },
+    {
+      "Sid": "S3ReadExample",
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:ListBucket"
+      ],
+      "Resource": [
+        "arn:aws:s3:::${bucket_name}",
+        "arn:aws:s3:::${bucket_name}/*"
+      ]
+    }
+  ]
+}

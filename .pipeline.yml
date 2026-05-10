@@ -1,0 +1,35 @@
+runtime:
+  python-version: "3.13"
+
+infra:
+  terraform-version: "1.14.9"
+  working-path: terraform-aws
+
+deploy:
+  working-path: app/src
+  requirements: requirements.txt
+
+tests:
+  working-path: app/tests
+  requirements: test-requirements.txt
+
+environments:
+  dev:
+    # TODO: ARN da role OIDC do GitHub para o ambiente dev
+    role-arn: arn:aws:iam::000000000000:role/CHANGE_ME-dev-role
+  prod:
+    # TODO: ARN da role OIDC do GitHub para o ambiente prod
+    role-arn: arn:aws:iam::000000000000:role/CHANGE_ME-prod-role
+
+  # TODO: liste arquivos que precisam de substituição de tokens (replace-tokens action)
+  # antes do package. Os tokens são as chaves do environment correspondente acima.
+  # files-to-replace:
+  #   - app/src/config.py
+
+# TODO: Add more options for the CI workflow, such as:
+# quality:
+#   lint: true
+#   typecheck: true
+#   test: true
+#   coverage_threshold: 80
+#   security_scan: true       # npm audit / pip-audit

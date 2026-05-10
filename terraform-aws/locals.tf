@@ -1,0 +1,31 @@
+locals {
+  # TODO: nome curto da função Lambda (kebab-case). Convenção SthoreH: lbd-<dominio>-<servico>
+  function_name = "lbd-example-service"
+  # TODO: descrição humana da função
+  function_description = "Example Lambda function"
+  handler              = "lambda_function.lambda_handler"
+  runtime              = "python3.13"
+
+  function_alias = var.environment
+
+  # Convention: the CI/CD pipeline packages the Lambda to <repo-root>/dist/lambda.zip
+  # before terraform plan/apply. Keeping the path here avoids passing -var from workflows.
+  lambda_zip_path = "${path.root}/../dist/lambda.zip"
+
+  environment_variables = {
+    ENVIRONMENT = var.environment
+    # TODO: adicione env vars derivadas (ex.: TABLE_NAME = "myservice-${var.environment}")
+  }
+
+  # TODO: variáveis usadas pelos templates IAM em iam_templates/**.
+  # account_id já é fornecido. Adicione campos conforme suas policies precisarem
+  # (ex.: table_name, queue_name, bucket_name).
+  template_variables = {
+    account_id = data.aws_caller_identity.current.account_id
+  }
+
+  tags = {
+    ManagedBy  = "terraform"
+    Repository = "github.com/${var.organization}/${var.github_repository}"
+  }
+}
