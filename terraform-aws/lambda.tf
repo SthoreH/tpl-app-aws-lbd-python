@@ -5,6 +5,8 @@ module "lambda" {
   description   = local.function_description
   handler       = local.handler
   runtime       = local.runtime
+  architectures = local.architectures
+  layers        = local.layers
   role          = module.lambda_role.role_arn
   zip_file_path = local.lambda_zip_path
 

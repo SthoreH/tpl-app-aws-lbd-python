@@ -24,6 +24,15 @@ locals {
     account_id = data.aws_caller_identity.current.account_id
   }
 
+  architectures = ["arm64"] # TODO: escolha a arquitetura (ex.: ["x86_64"] ou ["arm64"]). Lembre-se de atualizar o handler e as dependências locais se necessário.
+  # Powertools layer ARN is resolved from a public AWS-managed SSM parameter (see data.tf),
+  # so the latest version is picked up automatically without bumping a hardcoded layer version.
+  powertools_layer_arch = local.architectures[0]
+
+  layers = [
+    data.aws_ssm_parameter.powertools_layer_arn.value
+  ]
+
   tags = {
     ManagedBy  = "terraform"
     Repository = "github.com/${var.organization}/${var.github_repository}"
