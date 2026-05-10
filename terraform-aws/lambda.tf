@@ -1,5 +1,5 @@
 module "lambda" {
-  source = "github.com/SthoreH/shd-terraform-aws-lambda?ref=v1.0.0"
+  source = "github.com/SthoreH/shd-terraform-aws-lambda?ref=v1.0.1"
 
   name          = local.function_name
   description   = local.function_description
