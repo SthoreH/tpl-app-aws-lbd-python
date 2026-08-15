@@ -1,5 +1,10 @@
 module "lambda_role" {
-  source = "github.com/SthoreH/shd-terraform-aws-iam?ref=v1.1.2"
+  source = "github.com/SthoreH/shd-terraform-aws-iam?ref=v1.2.0"
+
+  # Drives the permissions boundary attached to the role
+  # (<product>-SharedPolicyBoundary). Required: the deploy role only allows
+  # iam:CreateRole when that boundary is present.
+  product = local.product
 
   role_name                   = "${local.function_name}-role"
   assume_role_policy_document = templatefile("${path.module}/iam_templates/trust/lambda_assume_role.tftpl", local.template_variables)

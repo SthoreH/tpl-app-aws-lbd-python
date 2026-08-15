@@ -33,7 +33,7 @@ Procure por `TODO` em todos os arquivos: `grep -rn "TODO" .`
 2. [`.claude/CLAUDE.md`](.claude/CLAUDE.md) — substituir nome do repositório e descrição na linha 1-3.
 3. [`.pipeline.yml`](.pipeline.yml) — preencher `environments.dev.role-arn` e `environments.prod.role-arn` com os ARNs OIDC reais. Ajustar `files-to-replace` se usar token replacement.
 4. [`terraform-aws/variables.tf`](terraform-aws/variables.tf) — atualizar `default` da `github_repository` para o nome real do repo.
-5. [`terraform-aws/locals.tf`](terraform-aws/locals.tf) — definir `function_name`, `function_description`, `template_variables` e `environment_variables`.
+5. [`terraform-aws/locals.tf`](terraform-aws/locals.tf) — definir `product`, `function_name`, `function_description`, `template_variables` e `environment_variables`. **`product` não é cosmético:** ele define a permissions boundary (`<product>-SharedPolicyBoundary`) que a role de deploy exige para poder criar a role da Lambda. Deixar o valor de exemplo faz o `terraform apply` falhar com `AccessDenied` em `iam:CreateRole`.
 6. [`terraform-aws/iam_templates/policies/application_policy.tftpl`](terraform-aws/iam_templates/policies/application_policy.tftpl) — começa vazio (`Statement: []`). Adicionar permissões reais. Ver exemplos em [`application_policy.example.tftpl`](terraform-aws/iam_templates/policies/application_policy.example.tftpl) (não consumido pelo Terraform — só referência).
 7. [`terraform-aws/environments/dev.tfvars`](terraform-aws/environments/dev.tfvars) — env vars específicas de dev.
 8. [`app/src/lambda_function.py`](app/src/lambda_function.py) — implementar handler real (atualmente faz echo do event).
