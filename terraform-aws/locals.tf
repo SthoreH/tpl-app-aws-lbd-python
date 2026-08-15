@@ -1,4 +1,10 @@
 locals {
+  # TODO: prefixo do produto (ex.: "biji"). Define a permissions boundary que o
+  # módulo de IAM anexa à role: <product>-SharedPolicyBoundary. A role de deploy
+  # só tem iam:CreateRole sob a condição de a boundary do produto estar presente,
+  # então um valor errado aqui faz o apply falhar com AccessDenied.
+  product = "example"
+
   # TODO: nome curto da função Lambda (kebab-case). Convenção SthoreH: lbd-<dominio>-<servico>
   function_name = "lbd-example-service"
   # TODO: descrição humana da função
